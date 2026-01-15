@@ -45,3 +45,6 @@ To build and run this project, you will need:
 
 Use the commands below to compile the code.  
 Make sure the vector extension (`v`) is enabled in the architecture flags.
+
+Compile: riscv64-linux-gnu-gcc -march=rv64gcv -o exec main.c ddpll_rvv.s -lm
+Run: qemu-riscv64 -L /usr/riscv64-linux-gnu exec
