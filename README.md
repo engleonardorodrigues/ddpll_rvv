@@ -1,36 +1,47 @@
-DDPLL RISC-V Vector (RVV) Implementation
-Este repositório contém uma implementação de alto desempenho de um Decision-Directed Phase-Locked Loop (DDPLL) para recuperação de fase em sistemas de comunicação (QPSK), escrita inteiramente em Assembly RISC-V utilizando a extensão vetorial RVV 1.0.
+# DDPLL RISC-V Vector (RVV) Implementation
 
-O projeto demonstra o uso de processamento paralelo (SIMD) para algoritmos de DSP, integrando código C (Testbench) com rotinas otimizadas em Assembly.
+This repository contains a high-performance implementation of a **Decision-Directed Phase-Locked Loop (DDPLL)** for phase recovery in communication systems (**QPSK**), written entirely in **RISC-V Assembly** using the **RVV 1.0 vector extension**.
 
-📋 Funcionalidades
-Arquitetura: RISC-V 64-bit (RV64GCV).
+The project demonstrates the use of **parallel (SIMD) processing** for DSP algorithms, integrating **C code (testbench)** with highly optimized **Assembly routines**.
 
-Modulação: QPSK (Quadrature Phase Shift Keying).
+---
 
-Algoritmo: DDPLL (Decision-Directed PLL) com suporte a símbolos piloto.
+## 📋 Features
 
-Otimizações:
+- **Architecture:** RISC-V 64-bit (RV64GCV)
+- **Modulation:** QPSK (Quadrature Phase Shift Keying)
+- **Algorithm:** Decision-Directed PLL (DDPLL) with pilot symbol support
 
-Uso intensivo de instruções vetoriais (vle32, vfmul, vfadd, etc.).
+### Optimizations
+- Extensive use of vector instructions (`vle32`, `vfmul`, `vfadd`, etc.)
+- Trigonometric function approximation (sine/cosine) using **Taylor Series**, avoiding slow library calls
+- Dynamic stack-based memory allocation for the loop filter
+- Strict compliance with the **RISC-V ABI** (callee-saved register preservation)
 
-Aproximação de funções trigonométricas (Seno/Cosseno) via Série de Taylor para evitar chamadas de biblioteca lenta.
+---
 
-Alocação dinâmica de memória na Stack para o filtro de loop.
+## 📂 Project Structure
 
-Conformidade estrita com a ABI do RISC-V (preservação de registradores callee-saved).
+- **`ddpll_rvv.s`**  
+  Core DDPLL algorithm implemented in RISC-V Assembly. Includes rotation, symbol decision, phase error computation, and loop filter logic.
 
-📂 Estrutura do Projeto
-ddpll_rvv.s: O core do algoritmo em Assembly RISC-V. Contém a lógica de rotação, decisão, cálculo de erro e filtro de loop.
+- **`main.c`**  
+  C-based testbench. Generates test signals with synthetic phase error, calls the assembly routine, and validates the results.
 
-main.c: O testbench em C. Gera sinais de teste com erro de fase sintético, chama a função assembly e valida os resultados.
+---
 
-🛠️ Pré-requisitos
-Para compilar e executar este projeto, você precisará de:
+## 🛠️ Prerequisites
 
-Toolchain GCC RISC-V com suporte a vetores (ex: riscv64-unknown-elf-gcc).
+To build and run this project, you will need:
 
-Emulador QEMU (User Mode) para executar binários RISC-V em x86/x64 (ex: qemu-riscv64).
+- **RISC-V GCC toolchain** with vector extension support  
+  (e.g., `riscv64-unknown-elf-gcc`)
+- **QEMU (User Mode)** to execute RISC-V binaries on x86/x64 systems  
+  (e.g., `qemu-riscv64`)
 
-🚀 Compilação e Execução
-Utilize os comandos abaixo para compilar o código. Certifique-se de habilitar a extensão vetorial (v) na flag de arquitetura.
+---
+
+## 🚀 Build and Run
+
+Use the commands below to compile the code.  
+Make sure the vector extension (`v`) is enabled in the architecture flags.
